@@ -3,161 +3,220 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- SEO -->
-<title>Lawrence Editz | Booking & Editing Services</title>
-<meta name="description" content="Lawrence Editz – Professional editing services. Easy booking, WhatsApp contact, and fast response. Based in Chandigarh.">
+<title>Lawrence Editz | Photo & Video Editing</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#ffffff;
-  --text:#000000;
-  --box:#f2f2f2;
-}
-.dark{
-  --bg:#000000;
-  --text:#ffffff;
-  --box:#1a1a1a;
-}
-body{
+*{
   margin:0;
-  font-family:Arial, sans-serif;
-  background:var(--bg);
-  color:var(--text);
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
 }
-header{
-  padding:25px;
+
+body{
+  background:#0f172a;
+  color:white;
+}
+
+nav{
+  display:flex;
+  justify-content:space-between;
+  padding:20px 8%;
+  align-items:center;
+  background:#0f172a;
+}
+
+nav h1{
+  font-size:24px;
+  background:linear-gradient(45deg,#ff00cc,#3333ff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.hero{
+  height:90vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   text-align:center;
-  background:var(--text);
-  color:var(--bg);
+  padding:0 10%;
+  background:linear-gradient(135deg,#1e3a8a,#9333ea,#ff0080);
 }
-section{
-  padding:30px;
-  max-width:900px;
-  margin:auto;
+
+.hero h2{
+  font-size:48px;
+  margin-bottom:20px;
 }
-h2{border-bottom:2px solid var(--text); display:inline-block;}
-button{
-  padding:12px;
-  background:var(--text);
-  color:var(--bg);
+
+.hero p{
+  font-size:18px;
+  margin-bottom:30px;
+}
+
+.hero button{
+  padding:15px 35px;
   border:none;
-  width:100%;
-  margin-top:10px;
+  border-radius:30px;
+  background:white;
+  color:#111;
+  font-weight:600;
+  cursor:pointer;
 }
-input, textarea{
-  width:100%;
-  padding:10px;
-  margin:8px 0;
+
+.section{
+  padding:80px 8%;
+  text-align:center;
 }
+
+.section h2{
+  font-size:36px;
+  margin-bottom:50px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+}
+
+.card{
+  background:#1e293b;
+  padding:30px;
+  border-radius:20px;
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-10px);
+  background:linear-gradient(135deg,#ff00cc,#3333ff);
+}
+
+/* GALLERY */
 .gallery{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:10px;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
 }
-.gallery div{
-  background:var(--box);
-  padding:40px;
+
+.gallery img{
+  width:100%;
+  border-radius:15px;
+  transition:0.4s;
+}
+
+.gallery img:hover{
+  transform:scale(1.05);
+}
+
+/* BOOKING */
+.booking{
+  background:linear-gradient(135deg,#9333ea,#ff0080);
+  padding:80px 8%;
   text-align:center;
 }
-.lang, .mode{
-  text-align:center;
-  margin:15px;
+
+.booking input, .booking textarea{
+  width:100%;
+  max-width:500px;
+  margin:10px auto;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  display:block;
 }
+
+.booking button{
+  padding:12px 30px;
+  border:none;
+  border-radius:20px;
+  background:#111;
+  color:white;
+  cursor:pointer;
+}
+
 footer{
-  background:var(--text);
-  color:var(--bg);
+  background:#0f172a;
+  padding:40px 8%;
   text-align:center;
-  padding:15px;
 }
-.whatsapp{
-  position:fixed;
-  bottom:15px;
-  right:15px;
-  background:#25D366;
-  color:#fff;
-  padding:15px;
-  border-radius:50%;
+
+footer a{
+  color:#ff00cc;
   text-decoration:none;
 }
-</style>
 
-<script>
-function toggleLang(){
-  document.getElementById("en").style.display =
-  document.getElementById("en").style.display==="none"?"block":"none";
-  document.getElementById("ta").style.display =
-  document.getElementById("ta").style.display==="none"?"block":"none";
+@media(max-width:768px){
+  .hero h2{
+    font-size:32px;
+  }
 }
-function toggleMode(){
-  document.body.classList.toggle("dark");
-}
-</script>
+</style>
 </head>
 
 <body>
 
-<header>
+<nav>
   <h1>Lawrence Editz</h1>
-  <p>Booking & Editing Services</p>
-</header>
+</nav>
 
-<div class="lang">
-  <button onclick="toggleLang()">🌐 Change Language</button>
-</div>
-
-<div class="mode">
-  <button onclick="toggleMode()">🌙 Dark / ☀️ Light</button>
-</div>
-
-<section id="en">
-  <h2>About</h2>
-  <p>Professional editing services with easy booking and fast communication.</p>
-</section>
-
-<section id="ta" style="display:none">
-  <h2>எங்களை பற்றி</h2>
-  <p>தொழில்முறை எடிட்டிங் சேவைகள். எளிய புக்கிங் மற்றும் விரைவான தொடர்பு.</p>
-</section>
-
-<section>
-  <h2>Book Now</h2>
-  <form action="https://formsubmit.co/dhanushofficiial@gmail.com" method="POST">
-    <input type="hidden" name="_next" value="thankyou.html">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="tel" name="phone" placeholder="Phone Number" required>
-    <input type="date" name="date" required>
-    <textarea name="message" placeholder="Booking details" required></textarea>
-    <button type="submit">Send Booking</button>
-  </form>
-</section>
-
-<section>
-  <h2>Gallery</h2>
-  <div class="gallery">
-    <div>Image 1</div>
-    <div>Image 2</div>
-    <div>Video</div>
-    <div>Image 3</div>
+<section class="hero">
+  <div>
+    <h2>Professional Photo & Video Editing</h2>
+    <p>Based in Chandigarh, India 🇮🇳</p>
+    <button onclick="document.getElementById('booking').scrollIntoView()">Book Now</button>
   </div>
 </section>
 
-<section>
-  <h2>Contact</h2>
-  <p>📍 Chandigarh</p>
-  <p>📧 dhanushofficiial@gmail.com</p>
+<section class="section">
+  <h2>Our Services</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>Photo Retouching</h3>
+      <p>Professional skin retouching & advanced color grading.</p>
+    </div>
+    <div class="card">
+      <h3>Wedding Video Editing</h3>
+      <p>Cinematic storytelling wedding highlight films.</p>
+    </div>
+    <div class="card">
+      <h3>YouTube Editing</h3>
+      <p>High-quality engaging edits for creators & brands.</p>
+    </div>
+    <div class="card">
+      <h3>Instagram Reels Editing</h3>
+      <p>Trendy short-form content optimized for engagement.</p>
+    </div>
+  </div>
 </section>
 
-<a class="whatsapp" href="https://wa.me/918847412823" target="_blank">💬</a>
+<section class="section">
+  <h2>Our Latest Work</h2>
+  <div class="gallery">
+    <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7" alt="Work 1">
+    <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" alt="Work 2">
+    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32" alt="Work 3">
+  </div>
+</section>
+
+<section class="booking" id="booking">
+  <h2>Book Your Project</h2>
+  <input type="text" placeholder="Your Name">
+  <input type="email" placeholder="Your Email">
+  <textarea rows="4" placeholder="Describe your project"></textarea>
+  <button>Submit</button>
+</section>
 
 <footer>
-  © 2026 Lawrence Editz
+  <p>📍 Chandigarh, India</p>
+  <p>Instagram: 
+    <a href="https://instagram.com/Lawrence_editz" target="_blank">
+      @Lawrence_editz
+    </a>
+  </p>
+  <p>Email: teamlawrencerecords@gmail.com</p>
+  <p>© 2026 Lawrence Editz. All Rights Reserved.</p>
 </footer>
 
 </body>
 </html>
-<title>Lawrence Editz | Professional Video Editing Services</title>
-
-<meta name="description" content="Lawrence Editz provides professional video editing services. Book now or contact via WhatsApp.">
-
-<meta name="keywords" content="Lawrence Editz, video editor, editing services, reels editor">
