@@ -61,4 +61,35 @@ a {
 <header>
     <h1>Lawrence Editz</h1>
     <p>Professional Photo & Video Editing</p>
-    <p>Chandigarh, India</
+    <p>Chandigarh, India</p>
+    <p>Email: teamlawrencerecords@gmail.com</p>
+    <p>Instagram: <a href="https://instagram.com/Lawrence_editz" target="_blank">@Lawrence_editz</a></p>
+</header>
+
+<h2>My Latest Collection</h2>
+
+<div class="gallery" id="gallery"></div>
+
+<footer>
+    © 2026 Lawrence Editz | All Rights Reserved
+</footer>
+
+<script>
+const imageFolder = "images/";
+const imageList = [
+    "edit1.jpg",
+    "edit2.jpg",
+    "edit3.jpg"
+];
+
+const gallery = document.getElementById("gallery");
+
+imageList.forEach(image => {
+    const img = document.createElement("img");
+    img.src = imageFolder + image;
+    gallery.appendChild(img);
+});
+</script>
+
+</body>
+</html>
