@@ -2,45 +2,35 @@
 <html>
 <head>
   <title>Lawrence Editz</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { font-family: Arial; background:#0f0f0f; color:white; text-align:center; }
-    h1 { margin-top:30px; }
-    #gallery img { width:200px; margin:10px; border-radius:12px; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Lawrence Editz Portfolio</h1>
+<h1>Lawrence Editz</h1>
+<p>Professional Photo & Reel Editor</p>
+
 <div id="gallery"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getStorage, ref, listAll, getDownloadURL } 
-from "https://www.gstatic.com/firebasejs/12.9.0/firebase-storage.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBNS6WCB8m5rZmThrOrfS-9Xl1oB8E-6Gs",
+  apiKey: "YOUR-KEY",
   authDomain: "lawrence-editz.firebaseapp.com",
   projectId: "lawrence-editz",
-  storageBucket: "lawrence-editz.firebasestorage.app",
-  messagingSenderId: "1064241500035",
-  appId: "1:1064241500035:web:8c8e795ab4d43d68b8f0b6"
 };
 
 const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
+const db = getFirestore(app);
 
-const listRef = ref(storage, "photos/");
+const gallery = document.getElementById("gallery");
 
-listAll(listRef).then((res) => {
-  res.items.forEach((itemRef) => {
-    getDownloadURL(itemRef).then((url) => {
-      const img = document.createElement("img");
-      img.src = url;
-      document.getElementById("gallery").appendChild(img);
-    });
-  });
+const querySnapshot = await getDocs(collection(db, "photos"));
+querySnapshot.forEach((doc) => {
+  const img = document.createElement("img");
+  img.src = doc.data().url;
+  gallery.appendChild(img);
 });
 </script>
 
