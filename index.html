@@ -4,38 +4,19 @@
   <title>Lawrence Editz</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: Arial; text-align:center; background:#111; color:white; }
-    input, button { padding:10px; margin:5px; border:none; border-radius:5px; }
-    button { background:#ff9800; color:white; cursor:pointer; }
-    #dashboard { display:none; margin-top:20px; }
-    img { width:150px; margin:10px; border-radius:10px; }
+    body { font-family: Arial; background:#0f0f0f; color:white; text-align:center; }
+    h1 { margin-top:30px; }
+    #gallery img { width:200px; margin:10px; border-radius:12px; }
   </style>
 </head>
 <body>
 
-<h1>Lawrence Editz</h1>
-
-<div id="login">
-  <h2>Admin Login</h2>
-  <input type="email" id="email" placeholder="Email"><br>
-  <input type="password" id="password" placeholder="Password"><br>
-  <button onclick="login()">Login</button>
-  <p id="loginMessage"></p>
-</div>
-
-<div id="dashboard">
-  <h2>Admin Dashboard</h2>
-  <input type="file" id="photoInput"><br>
-  <button onclick="uploadPhoto()">Add Photo</button>
-  <button onclick="logout()">Logout</button>
-  <div id="gallery"></div>
-</div>
+<h1>Lawrence Editz Portfolio</h1>
+<div id="gallery"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } 
-from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
-import { getStorage, ref, uploadBytes, getDownloadURL, listAll } 
+import { getStorage, ref, listAll, getDownloadURL } 
 from "https://www.gstatic.com/firebasejs/12.9.0/firebase-storage.js";
 
 const firebaseConfig = {
@@ -48,58 +29,18 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 const storage = getStorage(app);
 
-window.login = function() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+const listRef = ref(storage, "photos/");
 
-  signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      document.getElementById("loginMessage").innerText = "Login Success!";
-    })
-    .catch((error) => {
-      document.getElementById("loginMessage").innerText = error.message;
-    });
-};
-
-window.logout = function() {
-  signOut(auth);
-};
-
-window.uploadPhoto = function() {
-  const file = document.getElementById("photoInput").files[0];
-  const storageRef = ref(storage, "photos/" + file.name);
-
-  uploadBytes(storageRef, file).then(() => {
-    loadGallery();
-  });
-};
-
-function loadGallery() {
-  const listRef = ref(storage, "photos/");
-  listAll(listRef).then((res) => {
-    document.getElementById("gallery").innerHTML = "";
-    res.items.forEach((itemRef) => {
-      getDownloadURL(itemRef).then((url) => {
-        const img = document.createElement("img");
-        img.src = url;
-        document.getElementById("gallery").appendChild(img);
-      });
+listAll(listRef).then((res) => {
+  res.items.forEach((itemRef) => {
+    getDownloadURL(itemRef).then((url) => {
+      const img = document.createElement("img");
+      img.src = url;
+      document.getElementById("gallery").appendChild(img);
     });
   });
-}
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    document.getElementById("login").style.display = "none";
-    document.getElementById("dashboard").style.display = "block";
-    loadGallery();
-  } else {
-    document.getElementById("login").style.display = "block";
-    document.getElementById("dashboard").style.display = "none";
-  }
 });
 </script>
 
