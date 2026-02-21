@@ -1,93 +1,163 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lawrence Editz</title>
+    <title>Lawrence Editz | Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+        }
 
-<style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #ff4e50, #1e90ff);
-    color: white;
-    text-align: center;
-}
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+        }
 
-header {
-    padding: 30px 20px;
-}
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
 
-h1 {
-    font-size: 32px;
-    margin-bottom: 10px;
-}
+        .hero p {
+            color: #ccc;
+        }
 
-p {
-    margin: 5px 0;
-}
+        .instagram-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #E1306C;
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    padding: 20px;
-}
+        .services {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
 
-.gallery img {
-    width: 100%;
-    border-radius: 12px;
-    transition: transform 0.3s ease;
-}
+        .card {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 15px;
+            width: 280px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
 
-.gallery img:hover {
-    transform: scale(1.05);
-}
+        .booking-box {
+            background: white;
+            color: black;
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 20px;
+            border-radius: 15px;
+        }
 
-footer {
-    padding: 20px;
-    background: rgba(0,0,0,0.3);
-}
-a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-</style>
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: none;
+        }
+
+        button {
+            background: #2c5364;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #203a43;
+        }
+
+        .contact {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .contact a {
+            color: #00ffcc;
+            text-decoration: none;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #aaa;
+            font-size: 14px;
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
+<div class="hero">
     <h1>Lawrence Editz</h1>
-    <p>Professional Photo & Video Editing</p>
-    <p>Chandigarh, India</p>
-    <p>Email: teamlawrencerecords@gmail.com</p>
-    <p>Instagram: <a href="https://instagram.com/Lawrence_editz" target="_blank">@Lawrence_editz</a></p>
-</header>
+    <p>Premium Reel • Photo • Thumbnail Editing Services</p>
+    <a class="instagram-btn" href="https://instagram.com/Lawrence._editzz" target="_blank">
+        Follow on Instagram
+    </a>
+</div>
 
-<h2>My Latest Collection</h2>
+<div class="services">
+    <div class="card">
+        <h3>🎬 Reel Editing</h3>
+        <p>Cinematic transitions, trending effects & viral style reels.</p>
+    </div>
 
-<div class="gallery" id="gallery"></div>
+    <div class="card">
+        <h3>📸 Photo Editing</h3>
+        <p>Professional retouching & color grading.</p>
+    </div>
 
-<footer>
+    <div class="card">
+        <h3>🔥 Thumbnail Design</h3>
+        <p>High CTR YouTube thumbnails that grab attention.</p>
+    </div>
+</div>
+
+<div class="booking-box">
+    <h2>Book Your Service</h2>
+    <form id="bookingForm">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <select required>
+            <option value="">Select Service</option>
+            <option>Reel Editing</option>
+            <option>Photo Editing</option>
+            <option>Thumbnail Design</option>
+        </select>
+        <input type="date" required>
+        <button type="submit">Confirm Booking</button>
+    </form>
+    <p id="msg"></p>
+</div>
+
+<div class="contact">
+    📩 Email: 
+    <a href="mailto:teamlawrencerecords@gmail.com">
+        teamlawrencerecords@gmail.com
+    </a>
+</div>
+
+<div class="footer">
     © 2026 Lawrence Editz | All Rights Reserved
-</footer>
+</div>
 
 <script>
-const imageFolder = "images/";
-const imageList = [
-    "edit1.jpg",
-    "edit2.jpg",
-    "edit3.jpg"
-];
-
-const gallery = document.getElementById("gallery");
-
-imageList.forEach(image => {
-    const img = document.createElement("img");
-    img.src = imageFolder + image;
-    gallery.appendChild(img);
+document.getElementById("bookingForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    document.getElementById("msg").innerHTML = "✅ Booking received! We will contact you via email soon.";
 });
 </script>
 
