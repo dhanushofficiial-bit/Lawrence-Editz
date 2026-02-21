@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin - Lawrence Editz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial; text-align:center; background:#111; color:white; }
+    input, button { padding:10px; margin:5px; border:none; border-radius:5px; }
+    button { background:#ff9800; color:white; cursor:pointer; }
+    img { width:150px; margin:10px; border-radius:10px; }
+  </style>
+</head>
+<body>
+
+<h2>Admin Dashboard</h2>
+
+<div id="login">
+  <input type="email" id="email" placeholder="Email"><br>
+  <input type="password" id="password" placeholder="Password"><br>
+  <button onclick="login()">Login</button>
+</div>
+
+<div id="dashboard" style="display:none;">
+  <input type="file" id="photoInput"><br>
+  <button onclick="uploadPhoto()">Upload</button>
+  <button onclick="logout()">Logout</button>
+  <div id="gallery"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut }
+from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+import { getStorage, ref, uploadBytes, listAll, getDownloadURL, deleteObject }
+from "https://www.gstatic.com/firebasejs/12.9.0/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBNS6WCB8m5rZmThrOrfS-9Xl1oB8E-6Gs",
+  authDomain: "lawrence-editz.firebaseapp.com",
+  projectId: "lawrence-editz",
+  storageBucket: "lawrence-editz.firebasestorage.app",
+  messagingSenderId: "1064241500035",
+  appId: "1:1064241500035:web:8c8e795ab4d43d68b8f0b6"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const storage = getStorage(app);
+
+window.login = function() {
+  signInWithEmailAndPassword(auth,
+    document.getElementById("email").value,
+    document.getElementById("password").value
+  );
+};
+
+window.logout = function() {
+  signOut(auth);
+};
+
+window.uploadPhoto = function() {
+  const file = document.getElementById("photoInput").files[0];
+  const storageRef = ref(storage, "photos/" + file.name);
+  uploadBytes(storageRef, file).then(loadGallery);
+};
+
+function loadGallery() {
+  const listRef = ref(storage, "photos/");
+  listAll(listRef).then((res) => {
+    document.getElementById("gallery").innerHTML = "";
+    res.items.forEach((itemRef) => {
+      getDownloadURL(itemRef).then((url) => {
+        const img = document.createElement("img");
+        img.src = url;
+
+        const delBtn = document.createElement("button");
+        delBtn.innerText = "Delete";
+        delBtn.onclick = () => {
+          deleteObject(itemRef).then(loadGallery);
+        };
+
+        const div = document.createElement("div");
+        div.appendChild(img);
+        div.appendChild(delBtn);
+        document.getElementById("gallery").appendChild(div);
+      });
+    });
+  });
+}
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+    loadGallery();
+  }
+});
+</script>
+
+</body>
+</html>
