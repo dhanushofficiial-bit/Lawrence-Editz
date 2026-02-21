@@ -1,164 +1,142 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Lawrence Editz | Booking</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-            color: white;
-        }
+<title>Lawrence Editz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .hero {
-            text-align: center;
-            padding: 60px 20px;
-        }
+<style>
+body{margin:0;font-family:Arial;background:#0f2027;color:white;text-align:center}
+input,button{padding:10px;margin:5px;border-radius:6px;border:none}
+button{background:#00c3ff;font-weight:bold;cursor:pointer}
+.portfolio img{width:200px;margin:10px;border-radius:10px}
+.admin{display:none;background:#1a1a1a;padding:20px;margin-top:20px}
+</style>
 
-        .hero h1 {
-            font-size: 42px;
-            margin-bottom: 10px;
-        }
-
-        .hero p {
-            color: #ccc;
-        }
-
-        .instagram-btn {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: #E1306C;
-            color: white;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .services {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .card {
-            background: rgba(255,255,255,0.05);
-            padding: 20px;
-            border-radius: 15px;
-            width: 280px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
-        }
-
-        .booking-box {
-            background: white;
-            color: black;
-            max-width: 400px;
-            margin: 40px auto;
-            padding: 20px;
-            border-radius: 15px;
-        }
-
-        input, select, button {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 8px;
-            border: none;
-        }
-
-        button {
-            background: #2c5364;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #203a43;
-        }
-
-        .contact {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .contact a {
-            color: #00ffcc;
-            text-decoration: none;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: #aaa;
-            font-size: 14px;
-        }
-    </style>
 </head>
 <body>
 
-<div class="hero">
-    <h1>Lawrence Editz</h1>
-    <p>Premium Reel • Photo • Thumbnail Editing Services</p>
-    <a class="instagram-btn" href="https://instagram.com/Lawrence._editzz" target="_blank">
-        Follow on Instagram
-    </a>
+<h1>Lawrence Editz</h1>
+
+<h2>Book Service</h2>
+<input type="text" id="name" placeholder="Your Name">
+<input type="email" id="email" placeholder="Your Email">
+<input type="text" id="service" placeholder="Service">
+<button onclick="book()">Confirm Booking</button>
+
+<h2>Portfolio</h2>
+<div id="portfolio"></div>
+
+<hr>
+
+<h2>Admin Login</h2>
+<input type="email" id="adminEmail" placeholder="Admin Email">
+<input type="password" id="adminPass" placeholder="Password">
+<button onclick="login()">Login</button>
+<button onclick="logout()">Logout</button>
+
+<div class="admin" id="adminPanel">
+<h3>Admin Dashboard</h3>
+
+<h4>Add Portfolio Image</h4>
+<input type="text" id="imageUrl" placeholder="Image URL">
+<button onclick="addImage()">Add Image</button>
+
+<h4>Bookings List</h4>
+<div id="bookingList"></div>
+
 </div>
 
-<div class="services">
-    <div class="card">
-        <h3>🎬 Reel Editing</h3>
-        <p>Cinematic transitions, trending effects & viral style reels.</p>
-    </div>
+<script type="module">
 
-    <div class="card">
-        <h3>📸 Photo Editing</h3>
-        <p>Professional retouching & color grading.</p>
-    </div>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    <div class="card">
-        <h3>🔥 Thumbnail Design</h3>
-        <p>High CTR YouTube thumbnails that grab attention.</p>
-    </div>
-</div>
+// 🔥 REPLACE THIS WITH YOUR CONFIG
+const firebaseConfig = {
+  apiKey: "YOUR-KEY",
+  authDomain: "YOUR-DOMAIN",
+  projectId: "YOUR-ID",
+};
 
-<div class="booking-box">
-    <h2>Book Your Service</h2>
-    <form id="bookingForm">
-        <input type="text" placeholder="Your Name" required>
-        <input type="email" placeholder="Your Email" required>
-        <select required>
-            <option value="">Select Service</option>
-            <option>Reel Editing</option>
-            <option>Photo Editing</option>
-            <option>Thumbnail Design</option>
-        </select>
-        <input type="date" required>
-        <button type="submit">Confirm Booking</button>
-    </form>
-    <p id="msg"></p>
-</div>
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
 
-<div class="contact">
-    📩 Email: 
-    <a href="mailto:teamlawrencerecords@gmail.com">
-        teamlawrencerecords@gmail.com
-    </a>
-</div>
+// BOOKING (Public can book)
+window.book = async function(){
+  await addDoc(collection(db,"bookings"),{
+    name: name.value,
+    email: email.value,
+    service: service.value
+  });
+  alert("Booking Sent!");
+}
 
-<div class="footer">
-    © 2026 Lawrence Editz | All Rights Reserved
-</div>
+// LOGIN
+window.login = function(){
+  signInWithEmailAndPassword(auth, adminEmail.value, adminPass.value)
+  .then(()=>alert("Logged In"))
+  .catch(()=>alert("Login Failed"));
+}
 
-<script>
-document.getElementById("bookingForm").addEventListener("submit", function(e){
-    e.preventDefault();
-    document.getElementById("msg").innerHTML = "✅ Booking received! We will contact you via email soon.";
+// LOGOUT
+window.logout = function(){
+  signOut(auth);
+}
+
+// AUTH STATE
+onAuthStateChanged(auth,(user)=>{
+  if(user){
+    document.getElementById("adminPanel").style.display="block";
+    loadImages();
+    loadBookings();
+  }else{
+    document.getElementById("adminPanel").style.display="none";
+  }
 });
+
+// LOAD PORTFOLIO
+async function loadImages(){
+  const snap = await getDocs(collection(db,"portfolio"));
+  portfolio.innerHTML="";
+  snap.forEach(docSnap=>{
+    const data=docSnap.data();
+    portfolio.innerHTML+=`
+      <div>
+        <img src="${data.url}">
+        <button onclick="deleteImage('${docSnap.id}')">Delete</button>
+      </div>
+    `;
+  });
+}
+
+// ADD IMAGE
+window.addImage = async function(){
+  await addDoc(collection(db,"portfolio"),{url:imageUrl.value});
+  loadImages();
+}
+
+// DELETE IMAGE
+window.deleteImage = async function(id){
+  await deleteDoc(doc(db,"portfolio",id));
+  loadImages();
+}
+
+// LOAD BOOKINGS
+async function loadBookings(){
+  const snap = await getDocs(collection(db,"bookings"));
+  bookingList.innerHTML="";
+  snap.forEach(docSnap=>{
+    const d=docSnap.data();
+    bookingList.innerHTML+=`
+      <p>${d.name} | ${d.email} | ${d.service}</p>
+    `;
+  });
+}
+
 </script>
 
 </body>
